@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.krp.bakingapp.R;
 import com.krp.bakingapp.databinding.ActivityRecipeListBinding;
 import com.krp.bakingapp.utilities.FragmentUtils;
-import com.krp.bakingapp.views.RecipeListFragment;
+import com.krp.bakingapp.views.fragments.RecipeListFragment;
 
 public class RecipeListActivity extends AppCompatActivity {
 

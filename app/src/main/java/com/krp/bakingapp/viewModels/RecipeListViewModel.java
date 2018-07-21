@@ -72,13 +72,13 @@ public class RecipeListViewModel implements Parcelable {
         return recipeList;
     }
 
-    private void fetchRecipes(){
-        if(contextWeakReference.get() !=null) {
-            if(NetworkHandler.isNetworkAvailable(contextWeakReference.get())){
+    private void fetchRecipes() {
+        if (contextWeakReference.get() != null) {
+            if (NetworkHandler.isNetworkAvailable(contextWeakReference.get())) {
                 // If network is available.
                 makeServiceCall();
 
-            }else{
+            } else {
                 // If network is not available.
                 noInternetVisibility.set(View.VISIBLE);
                 progressbarVisibility.set(View.GONE);
@@ -86,15 +86,15 @@ public class RecipeListViewModel implements Parcelable {
         }
     }
 
-    private void makeServiceCall(){
-        if(baApiService == null){
+    private void makeServiceCall() {
+        if (baApiService == null) {
             baApiService = BaseUrl.getBaApiService();
         }
 
         baApiService.getRecipeList().enqueue(new Callback<List<Recipe>>() {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     updateList(response.body());
 
                 }
@@ -110,16 +110,18 @@ public class RecipeListViewModel implements Parcelable {
 
     }
 
-    public void updateList(List<Recipe> data){
+    public void updateList(List<Recipe> data) {
 
-        if(recipeList !=null){
-            recipeList.clear();
+        if (adapter != null) {
+            if (recipeList != null) {
+                recipeList.clear();
+            }
+            for (Recipe recipe : data) {
+                recipeList.add(new RecipeItemViewModel(recipe));
+            }
+            adapter.setList(recipeList);
+            recyclerViewVisibility.set(View.VISIBLE);
         }
-        for(Recipe recipe: data){
-            recipeList.add(new RecipeItemViewModel(recipe));
-        }
-        adapter.setList(recipeList);
-        recyclerViewVisibility.set(View.VISIBLE);
     }
 
     @Override

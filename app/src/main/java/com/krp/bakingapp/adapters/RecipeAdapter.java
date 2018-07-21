@@ -38,4 +38,11 @@ public class RecipeAdapter extends BindableAdapter {
         data.addAll(newData);
         notifyDataSetChanged();
     }
+
+    public void add(RowViewModel item) {
+        if (item != null) {
+            data.add(item);
+            notifyItemChanged(data.size() - 1);
+        }
+    }
 }

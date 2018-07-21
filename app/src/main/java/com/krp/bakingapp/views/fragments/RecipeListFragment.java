@@ -1,4 +1,4 @@
-package com.krp.bakingapp.views;
+package com.krp.bakingapp.views.fragments;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
