@@ -1,9 +1,12 @@
 package com.krp.bakingapp.viewModels;
 
+import android.content.Intent;
 import android.os.Parcel;
+import android.view.View;
 
 import com.krp.bakingapp.R;
 import com.krp.bakingapp.model.Step;
+import com.krp.bakingapp.views.activities.RecipeStepInfoActivity;
 
 /**
  * Created by Rakesh Praneeth.
@@ -51,4 +54,12 @@ public class RecipeStepItemViewModel extends RowViewModel {
             return new RecipeStepItemViewModel[size];
         }
     };
+
+    public void onRecipeStepClicked(View view) {
+        if (view != null && step != null) {
+            Intent intent = new Intent(view.getContext(), RecipeStepInfoActivity.class);
+            intent.putExtra(RecipeStepInfoActivity.RECIPE_STEP_OBJ, step);
+            view.getContext().startActivity(intent);
+        }
+    }
 }

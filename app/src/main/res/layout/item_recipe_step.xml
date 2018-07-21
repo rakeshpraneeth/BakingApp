@@ -17,7 +17,8 @@
         android:layout_marginLeft="@dimen/recipe_cardview_side_margin"
         android:layout_marginRight="@dimen/recipe_cardview_side_margin"
         android:layout_marginTop="@dimen/recipe_cardview_top_bottom_margin"
-        android:elevation="4dp">
+        android:elevation="4dp"
+        android:onClick="@{(v)->item.onRecipeStepClicked(v)}">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -31,11 +32,11 @@
                 android:id="@+id/recipeName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="@{item.step.shortDescription}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:gravity="center"
                 tools:text="Remove from  " />
 
 
