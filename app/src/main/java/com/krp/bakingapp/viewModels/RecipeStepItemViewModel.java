@@ -5,6 +5,7 @@ import android.os.Parcel;
 import android.view.View;
 
 import com.krp.bakingapp.R;
+import com.krp.bakingapp.model.Recipe;
 import com.krp.bakingapp.model.Step;
 import com.krp.bakingapp.views.activities.RecipeStepInfoActivity;
 
@@ -13,10 +14,16 @@ import com.krp.bakingapp.views.activities.RecipeStepInfoActivity;
  */
 public class RecipeStepItemViewModel extends RowViewModel {
 
+    private Recipe recipe;
     private Step step;
 
-    public RecipeStepItemViewModel(Step step) {
+    public RecipeStepItemViewModel(Recipe recipe, Step step) {
+        this.recipe = recipe;
         this.step = step;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
     }
 
     public Step getStep() {
@@ -58,6 +65,7 @@ public class RecipeStepItemViewModel extends RowViewModel {
     public void onRecipeStepClicked(View view) {
         if (view != null && step != null) {
             Intent intent = new Intent(view.getContext(), RecipeStepInfoActivity.class);
+            intent.putExtra(RecipeStepInfoActivity.RECIPE_OBJ, recipe);
             intent.putExtra(RecipeStepInfoActivity.RECIPE_STEP_OBJ, step);
             view.getContext().startActivity(intent);
         }

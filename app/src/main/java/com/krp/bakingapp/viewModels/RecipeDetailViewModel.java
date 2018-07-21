@@ -50,7 +50,7 @@ public class RecipeDetailViewModel {
     private void showRecipeSteps() {
         if (adapter != null) {
             for (Step step : recipe.getSteps()) {
-                adapter.add(new RecipeStepItemViewModel(step));
+                adapter.add(new RecipeStepItemViewModel(recipe, step));
             }
         }
     }

@@ -15,4 +15,7 @@ dependencies {
     // Retrofit Library - REST client
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
+    //Exo Player
+    implementation "com.google.android.exoplayer:exoplayer:$exoPlayerVersion"
 }
