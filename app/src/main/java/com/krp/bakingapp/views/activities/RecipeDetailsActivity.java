@@ -23,8 +23,11 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             Recipe recipe = getIntent().getParcelableExtra(RECIPE_MODEL);
-            FragmentUtils.addFragment(this, R.id.recipeDetailsContainer,
-                    RecipeDetailsFragment.newInstance(recipe), RecipeDetailsFragment.TAG);
+            if (recipe != null) {
+                setTitle(recipe.getName());
+                FragmentUtils.addFragment(this, R.id.recipeDetailsContainer,
+                        RecipeDetailsFragment.newInstance(recipe), RecipeDetailsFragment.TAG);
+            }
         }
     }
 }

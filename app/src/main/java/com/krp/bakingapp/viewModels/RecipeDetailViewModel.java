@@ -3,6 +3,7 @@ package com.krp.bakingapp.viewModels;
 import com.krp.bakingapp.adapters.RecipeAdapter;
 import com.krp.bakingapp.model.Ingredient;
 import com.krp.bakingapp.model.Recipe;
+import com.krp.bakingapp.model.Step;
 
 /**
  * Created by Rakesh Praneeth.
@@ -22,6 +23,7 @@ public class RecipeDetailViewModel {
 
     public void showData() {
         showIngredientListItem();
+        showRecipeSteps();
     }
 
     private void showIngredientListItem() {
@@ -42,6 +44,14 @@ public class RecipeDetailViewModel {
         }
         if (adapter != null) {
             adapter.add(new IngredientItemViewModel(builder.toString()));
+        }
+    }
+
+    private void showRecipeSteps() {
+        if (adapter != null) {
+            for (Step step : recipe.getSteps()) {
+                adapter.add(new RecipeStepItemViewModel(step));
+            }
         }
     }
 }
