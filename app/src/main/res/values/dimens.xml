@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="recipe_cardview_side_margin">20dp</dimen>
+    <dimen name="recipe_cardview_top_bottom_margin">7dp</dimen>
+    <dimen name="recipe_item_top_bottom_padding">20dp</dimen>
+    <dimen name="no_internet_text_size">20sp</dimen>
+</resources>
