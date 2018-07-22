@@ -24,6 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/recipe_item_top_bottom_padding"
+            android:paddingLeft="@dimen/recipe_item_side_padding"
+            android:paddingRight="@dimen/recipe_item_side_padding"
             android:paddingTop="@dimen/recipe_item_top_bottom_padding">
 
             <android.support.v7.widget.AppCompatTextView
@@ -31,10 +33,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{item.recipe.name}"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/servingsTV"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Recipe Name" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/servingsTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.format(@string/servings_format,item.recipe.servings)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/recipeName"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="8 servings" />
 
 
         </android.support.constraint.ConstraintLayout>

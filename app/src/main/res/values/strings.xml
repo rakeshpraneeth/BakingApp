@@ -5,4 +5,5 @@
     <string name="unable_to_retrieve_data">Unable to retrieve data</string>
     <string name="next_step">Next Step</string>
     <string name="previous_step">Previous Step</string>
+    <string name="servings_format">%d servings</string>
 </resources>
