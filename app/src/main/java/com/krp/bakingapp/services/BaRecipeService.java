@@ -7,7 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 
-import com.krp.bakingapp.BakingAppWidgetProvider;
+import com.krp.bakingapp.R;
+import com.krp.bakingapp.widget.BakingAppWidgetProvider;
 import com.krp.bakingapp.model.Recipe;
 import com.krp.bakingapp.utilities.BaSharedPreferenceUtil;
 
@@ -69,6 +70,8 @@ public class BaRecipeService extends IntentService {
         if (recipe != null) {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, BakingAppWidgetProvider.class));
+
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.ingredients_list);
 
             BakingAppWidgetProvider.updatePlantWidgets(this, appWidgetManager, recipe, appWidgetIds);
         }

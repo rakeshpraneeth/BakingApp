@@ -27,7 +27,7 @@
             android:name=".views.activities.RecipeStepInfoActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode" />
 
-        <receiver android:name=".BakingAppWidgetProvider">
+        <receiver android:name=".widget.BakingAppWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -39,6 +39,9 @@
 
         <service android:name=".services.BaRecipeService" />
 
+        <service
+            android:name=".widget.IngredientsWidgetLvService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>

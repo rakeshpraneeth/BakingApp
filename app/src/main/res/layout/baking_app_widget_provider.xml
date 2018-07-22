@@ -31,35 +31,44 @@
             android:layout_gravity="center"
             android:layout_margin="8dp"
             android:background="#09C"
-            android:contentDescription="@string/no_internet_connection"
             android:text="@string/na"
             android:textColor="#ffffff"
             android:textStyle="italic" />
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/ingredientsWidgetLabelTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="8dp"
-        android:background="#09C"
-        android:contentDescription="@string/ingredients"
-        android:text="@string/ingredients"
-        android:textColor="#ffffff"
-        android:textStyle="bold" />
+    <ListView
+        android:id="@+id/ingredients_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/ingredientsWidgetValueTV"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/empty_ingredient_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="8dp"
-        android:background="#09C"
-        android:contentDescription="@string/no_internet_connection"
-        android:text="@string/na"
-        android:textColor="#ffffff"
-        android:textStyle="italic" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ingredientsWidgetLabelTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:background="#09C"
+            android:text="@string/ingredients"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/ingredientsWidgetValueTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:background="#09C"
+            android:text="@string/na"
+            android:textColor="#ffffff"
+            android:textStyle="italic" />
+    </LinearLayout>
 
 </LinearLayout>

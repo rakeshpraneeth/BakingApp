@@ -31,4 +31,13 @@ public final class BaUtils {
         }
         return builder.toString();
     }
+
+    public static String getStringByIngredient(Ingredient ingredient) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(ingredient.getQuantity())
+                .append(ingredient.getMeasure())
+                .append(" of ")
+                .append(ingredient.getIngredient());
+        return builder.toString();
+    }
 }

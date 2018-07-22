@@ -1,16 +1,15 @@
-package com.krp.bakingapp;
+package com.krp.bakingapp.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.text.Html;
 import android.widget.RemoteViews;
 
+import com.krp.bakingapp.R;
 import com.krp.bakingapp.model.Recipe;
 import com.krp.bakingapp.services.BaRecipeService;
-import com.krp.bakingapp.utilities.BaUtils;
 import com.krp.bakingapp.views.activities.RecipeDetailsActivity;
 import com.krp.bakingapp.views.activities.RecipeListActivity;
 
@@ -30,7 +29,11 @@ public class BakingAppWidgetProvider extends AppWidgetProvider {
             // If obtained recipe is not null, the show the recipe details and navigate user to details screen when clicked on widget.
 
             views.setTextViewText(R.id.recipeWidgetValueTV, recipe.getName());
-            views.setTextViewText(R.id.ingredientsWidgetValueTV, Html.fromHtml(BaUtils.parseIngredientsToHtmlString(recipe.getIngredients())));
+
+            Intent listService = new Intent(context, IngredientsWidgetLvService.class);
+            views.setRemoteAdapter(R.id.ingredients_list, listService);
+
+            views.setEmptyView(R.id.ingredients_list, R.id.empty_ingredient_view);
 
             intent = new Intent(context, RecipeDetailsActivity.class);
             intent.putExtra(RecipeDetailsActivity.RECIPE_MODEL, recipe);
