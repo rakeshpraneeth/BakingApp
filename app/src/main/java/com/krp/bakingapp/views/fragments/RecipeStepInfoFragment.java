@@ -22,8 +22,6 @@ public class RecipeStepInfoFragment extends Fragment {
     private static final String STEP_POSITION = "stepPosition";
 
     private FragmentRecipeStepInfoBinding binding;
-    private Recipe recipe;
-    private int currentStepPosition;
 
     private RecipeStepInfoViewModel viewModel;
 
@@ -55,8 +53,8 @@ public class RecipeStepInfoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         if (savedInstanceState == null) {
-            recipe = getRecipe();
-            currentStepPosition = getRecipeStep();
+            Recipe recipe = getRecipe();
+            int currentStepPosition = getRecipeStep();
             if (currentStepPosition != -1) {
                 viewModel = new RecipeStepInfoViewModel(getContext(), recipe, currentStepPosition);
             }

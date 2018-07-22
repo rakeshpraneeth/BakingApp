@@ -34,7 +34,6 @@ public final class BaSharedPreferenceUtil {
                 Context.MODE_PRIVATE);
 
         String recipeString = sharedPreferences.getString(RECENTLY_CHANGED_RECIPE, null);
-        Recipe recipe = new Gson().fromJson(recipeString, Recipe.class);
-        return recipe;
+        return new Gson().fromJson(recipeString, Recipe.class);
     }
 }
