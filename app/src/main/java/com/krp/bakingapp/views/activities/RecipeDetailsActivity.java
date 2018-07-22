@@ -2,15 +2,18 @@ package com.krp.bakingapp.views.activities;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.krp.bakingapp.R;
 import com.krp.bakingapp.databinding.ActivityRecipeDetailsBinding;
+import com.krp.bakingapp.interfaces.OnRecipeStepSelectedCallback;
 import com.krp.bakingapp.model.Recipe;
 import com.krp.bakingapp.utilities.FragmentUtils;
 import com.krp.bakingapp.views.fragments.RecipeDetailsFragment;
+import com.krp.bakingapp.views.fragments.RecipeStepInfoFragment;
 
-public class RecipeDetailsActivity extends AppCompatActivity {
+public class RecipeDetailsActivity extends AppCompatActivity implements OnRecipeStepSelectedCallback {
 
     ActivityRecipeDetailsBinding binding;
     public static final String RECIPE_MODEL = "recipeModel";
@@ -28,6 +31,14 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                 FragmentUtils.addFragment(this, R.id.recipeDetailsContainer,
                         RecipeDetailsFragment.newInstance(recipe), RecipeDetailsFragment.TAG);
             }
+
         }
+    }
+
+    @Override
+    public void onRecipeSelected(Recipe recipe, int position) {
+
+        Fragment fragment = RecipeStepInfoFragment.newInstance(recipe, position);
+        FragmentUtils.replaceFragment(this, R.id.recipeStepDetailsContainerTablet, fragment,RecipeStepInfoFragment.TAG);
     }
 }

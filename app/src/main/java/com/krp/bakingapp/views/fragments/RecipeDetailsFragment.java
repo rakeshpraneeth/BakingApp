@@ -1,6 +1,7 @@
 package com.krp.bakingapp.views.fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import com.krp.bakingapp.R;
 import com.krp.bakingapp.adapters.RecipeStepsAdapter;
 import com.krp.bakingapp.databinding.FragmentRecipeDetailsBinding;
+import com.krp.bakingapp.interfaces.OnRecipeStepSelectedCallback;
 import com.krp.bakingapp.interfaces.OnRecipeStepsRvItemClicked;
 import com.krp.bakingapp.model.Ingredient;
 import com.krp.bakingapp.model.Recipe;
@@ -29,11 +31,17 @@ public class RecipeDetailsFragment extends Fragment implements OnRecipeStepsRvIt
 
     public static final String TAG = RecipeDetailsFragment.class.getSimpleName();
     public static final String RECIPE_ITEM = "recipeItem";
+    private static final String INGREDIENT_TEXT = "ingredientText";
 
     FragmentRecipeDetailsBinding binding;
     Recipe recipe;
     RecipeDetailViewModel viewModel;
     RecipeStepsAdapter adapter;
+    String ingredientText;
+
+    OnRecipeStepSelectedCallback callback;
+
+    private boolean isTabletMode;
 
     public static RecipeDetailsFragment newInstance(Recipe recipe) {
 
@@ -46,9 +54,22 @@ public class RecipeDetailsFragment extends Fragment implements OnRecipeStepsRvIt
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            callback = (OnRecipeStepSelectedCallback) context;
+        } catch (Exception e) {
+            throw new ClassCastException("must implement listener");
+        }
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+
+        isTabletMode = getResources().getBoolean(R.bool.is_tablet_mode);
     }
 
     @Override
@@ -73,9 +94,17 @@ public class RecipeDetailsFragment extends Fragment implements OnRecipeStepsRvIt
                 viewModel.showData();
                 parseIngredientsData(recipe.getIngredients());
             }
+        } else {
+            setIngredientsText(savedInstanceState.getString(INGREDIENT_TEXT));
         }
         initializeRv();
         binding.setViewModel(viewModel);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(INGREDIENT_TEXT, ingredientText);
     }
 
     private void parseIngredientsData(List<Ingredient> ingredientList) {
@@ -98,6 +127,7 @@ public class RecipeDetailsFragment extends Fragment implements OnRecipeStepsRvIt
     }
 
     private void setIngredientsText(String ingredientsText) {
+        this.ingredientText = ingredientsText;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             binding.ingredientsTV.setText(Html.fromHtml(ingredientsText, Html.FROM_HTML_MODE_LEGACY));
         } else {
@@ -117,10 +147,18 @@ public class RecipeDetailsFragment extends Fragment implements OnRecipeStepsRvIt
 
     @Override
     public void onItemClicked(int position) {
-        Intent intent = new Intent(getContext(), RecipeStepInfoActivity.class);
-        intent.putExtra(RecipeStepInfoActivity.RECIPE_OBJ, recipe);
-        intent.putExtra(RecipeStepInfoActivity.STEP_POSITION, position);
-        getContext().startActivity(intent);
+
+        if (isTabletMode) {
+
+            callback.onRecipeSelected(recipe, position);
+
+        } else {
+
+            Intent intent = new Intent(getContext(), RecipeStepInfoActivity.class);
+            intent.putExtra(RecipeStepInfoActivity.RECIPE_OBJ, recipe);
+            intent.putExtra(RecipeStepInfoActivity.STEP_POSITION, position);
+            getContext().startActivity(intent);
+        }
     }
 
 }

@@ -23,4 +23,14 @@ public final class FragmentUtils {
                     .commit();
         }
     }
+
+    public static void replaceFragment(Context context, int containerId, Fragment fragment, String TAG) {
+        AppCompatActivity appCompatActivity = (AppCompatActivity) context;
+        if (appCompatActivity != null && fragment != null) {
+            appCompatActivity.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(containerId, fragment, TAG)
+                    .commit();
+        }
+    }
 }
