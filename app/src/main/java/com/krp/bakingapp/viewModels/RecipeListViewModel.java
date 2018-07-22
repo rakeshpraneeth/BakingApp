@@ -11,6 +11,7 @@ import com.krp.bakingapp.common.BaseUrl;
 import com.krp.bakingapp.interfaces.BaApiService;
 import com.krp.bakingapp.model.Recipe;
 import com.krp.bakingapp.utilities.NetworkHandler;
+import com.krp.bakingapp.views.activities.RecipeListActivity;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class RecipeListViewModel implements Parcelable {
     private ObservableInt recyclerViewVisibility;
 
     private List<RowViewModel> recipeList;
+
 
     public RecipeListViewModel(Context context) {
         contextWeakReference = new WeakReference<>(context);
@@ -73,7 +75,9 @@ public class RecipeListViewModel implements Parcelable {
     }
 
     private void fetchRecipes() {
+
         if (contextWeakReference.get() != null) {
+
             if (NetworkHandler.isNetworkAvailable(contextWeakReference.get())) {
                 // If network is available.
                 makeServiceCall();
@@ -112,6 +116,14 @@ public class RecipeListViewModel implements Parcelable {
 
     public void updateList(List<Recipe> data) {
 
+        // Need this for Espresso testing.
+        try {
+            RecipeListActivity activity = (RecipeListActivity) contextWeakReference.get();
+            activity.getmIdlingResource().setIdleState(true);
+        }catch (Exception e){
+
+        }
+
         if (adapter != null) {
             if (recipeList != null) {
                 recipeList.clear();
@@ -147,4 +159,5 @@ public class RecipeListViewModel implements Parcelable {
             return new RecipeListViewModel[size];
         }
     };
+
 }
