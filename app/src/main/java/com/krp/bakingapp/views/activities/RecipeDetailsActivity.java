@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.krp.bakingapp.R;
-import com.krp.bakingapp.databinding.ActivityRecipeDetailsBinding;
 import com.krp.bakingapp.interfaces.OnRecipeStepSelectedCallback;
 import com.krp.bakingapp.model.Recipe;
 import com.krp.bakingapp.utilities.FragmentUtils;
@@ -15,14 +14,14 @@ import com.krp.bakingapp.views.fragments.RecipeStepInfoFragment;
 
 public class RecipeDetailsActivity extends AppCompatActivity implements OnRecipeStepSelectedCallback {
 
-    private ActivityRecipeDetailsBinding binding;
+
     public static final String RECIPE_MODEL = "recipeModel";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe_details);
+        DataBindingUtil.setContentView(this, R.layout.activity_recipe_details);
 
         if (savedInstanceState == null) {
             Recipe recipe = getIntent().getParcelableExtra(RECIPE_MODEL);
