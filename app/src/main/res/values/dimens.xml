@@ -5,5 +5,5 @@
     <dimen name="recipe_item_top_bottom_padding">20dp</dimen>
     <dimen name="recipe_item_side_padding">10dp</dimen>
     <dimen name="no_internet_text_size">20sp</dimen>
-    <dimen name="recipe_steps_rv_top_margin">30sp</dimen>
+    <dimen name="recipe_steps_rv_top_margin">20sp</dimen>
 </resources>
