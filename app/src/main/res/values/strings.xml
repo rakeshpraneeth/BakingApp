@@ -7,5 +7,7 @@
     <string name="previous_step">Previous Step</string>
     <string name="servings_format">%d servings</string>
     <string name="ingredients">Ingredients</string>
+    <string name="recipe">Recipe :</string>
+    <string name="na">N/A</string>
     <string name="right_arrow_content_description">Right Arrow</string>
 </resources>

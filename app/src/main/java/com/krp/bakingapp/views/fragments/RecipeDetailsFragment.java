@@ -20,12 +20,11 @@ import com.krp.bakingapp.adapters.RecipeStepsAdapter;
 import com.krp.bakingapp.databinding.FragmentRecipeDetailsBinding;
 import com.krp.bakingapp.interfaces.OnRecipeStepSelectedCallback;
 import com.krp.bakingapp.interfaces.OnRecipeStepsRvItemClicked;
-import com.krp.bakingapp.model.Ingredient;
 import com.krp.bakingapp.model.Recipe;
+import com.krp.bakingapp.services.BaRecipeService;
+import com.krp.bakingapp.utilities.BaUtils;
 import com.krp.bakingapp.viewModels.RecipeDetailViewModel;
 import com.krp.bakingapp.views.activities.RecipeStepInfoActivity;
-
-import java.util.List;
 
 public class RecipeDetailsFragment extends Fragment implements OnRecipeStepsRvItemClicked {
 
@@ -92,7 +91,11 @@ public class RecipeDetailsFragment extends Fragment implements OnRecipeStepsRvIt
                 viewModel = new RecipeDetailViewModel(recipe);
                 viewModel.setAdapter(adapter);
                 viewModel.showData();
-                parseIngredientsData(recipe.getIngredients());
+                setIngredientsText(BaUtils.parseIngredientsToHtmlString(recipe.getIngredients()));
+
+
+                // Storing the recipe in the shared preferences and updating the widgets.
+                BaRecipeService.startActionToUpdateRecipe(getContext(), recipe);
             }
         } else {
             setIngredientsText(savedInstanceState.getString(INGREDIENT_TEXT));
@@ -105,25 +108,6 @@ public class RecipeDetailsFragment extends Fragment implements OnRecipeStepsRvIt
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(INGREDIENT_TEXT, ingredientText);
-    }
-
-    private void parseIngredientsData(List<Ingredient> ingredientList) {
-        StringBuilder builder = new StringBuilder();
-        int pointNumber = 1;
-        for (Ingredient ingredient : ingredientList) {
-            builder.append("<b>")
-                    .append(pointNumber)
-                    .append(". ")
-                    .append("</b>")
-                    .append(" Need ")
-                    .append(ingredient.getQuantity())
-                    .append(ingredient.getMeasure())
-                    .append(" of ")
-                    .append(ingredient.getIngredient())
-                    .append("<br/>");
-            pointNumber++;
-        }
-        setIngredientsText(builder.toString());
     }
 
     private void setIngredientsText(String ingredientsText) {
