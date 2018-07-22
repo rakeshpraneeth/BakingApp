@@ -34,8 +34,7 @@ import com.krp.bakingapp.model.Step;
 public class RecipeStepInfoViewModel {
 
     Recipe recipe;
-    Step currentStep;
-    int selectedStepId;
+    int currentStepPosition;
 
     private static ExoPlayer mExoPlayer;
     private Context context;
@@ -45,17 +44,16 @@ public class RecipeStepInfoViewModel {
     private ObservableInt nextBtnVisibility;
     private ObservableBoolean isExoPlayerInitialized;
 
-    public RecipeStepInfoViewModel(Context context, Recipe recipe, Step step) {
+    public RecipeStepInfoViewModel(Context context, Recipe recipe, int  currentStepPosition) {
         this.context = context;
         this.recipe = recipe;
-        this.currentStep = step;
-        this.selectedStepId = step.getId();
+        this.currentStepPosition = currentStepPosition;
 
         instructions = new ObservableField<>("");
         previousBtnVisibility = new ObservableInt(View.GONE);
         nextBtnVisibility = new ObservableInt(View.GONE);
         isExoPlayerInitialized = new ObservableBoolean(false);
-        initializeData(currentStep);
+        initializeData(recipe.getSteps().get(currentStepPosition));
     }
 
     public ObservableField<String> getInstructions() {
@@ -82,8 +80,8 @@ public class RecipeStepInfoViewModel {
                 initializeExoPlayer(Uri.parse(step.getThumbnailURL()));
             }
             instructions.set(step.getDescription());
-            previousStepBtnVisibility(step.getId());
-            nextStepBtnVisibility(step.getId());
+            previousStepBtnVisibility();
+            nextStepBtnVisibility();
         }
     }
 
@@ -137,23 +135,23 @@ public class RecipeStepInfoViewModel {
     }
 
     public void onPreviousBtnClicked(View view) {
-        selectedStepId = selectedStepId - 1;
-        if (recipe.getSteps().get(selectedStepId) != null) {
-            initializeData(recipe.getSteps().get(selectedStepId));
+        currentStepPosition = currentStepPosition - 1;
+        if (recipe.getSteps().get(currentStepPosition) != null) {
+            initializeData(recipe.getSteps().get(currentStepPosition));
         }
     }
 
     public void onNextBtnClicked(View view) {
-        selectedStepId = selectedStepId + 1;
-        if (recipe.getSteps().get(selectedStepId) != null) {
-            initializeData(recipe.getSteps().get(selectedStepId));
+        currentStepPosition = currentStepPosition + 1;
+        if (recipe.getSteps().get(currentStepPosition) != null) {
+            initializeData(recipe.getSteps().get(currentStepPosition));
         }
     }
 
     // Method to handle previous button visibility depending on the current step.
-    private void previousStepBtnVisibility(int selectedStepPosition) {
+    private void previousStepBtnVisibility() {
 
-        if (selectedStepPosition == 0) {
+        if (currentStepPosition == 0) {
             // Selected step position is the first position
             previousBtnVisibility.set(View.GONE);
         } else {
@@ -162,8 +160,8 @@ public class RecipeStepInfoViewModel {
     }
 
     // Method to handle next button visibility depending on the current step.
-    private void nextStepBtnVisibility(int selectedStepPosition) {
-        if (selectedStepPosition >= recipe.getSteps().size() - 1) {
+    private void nextStepBtnVisibility() {
+        if (currentStepPosition >= recipe.getSteps().size() - 1) {
             // If the selected step position is the last position
             nextBtnVisibility.set(View.GONE);
         } else {

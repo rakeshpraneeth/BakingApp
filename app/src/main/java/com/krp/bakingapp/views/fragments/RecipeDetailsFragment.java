@@ -119,7 +119,7 @@ public class RecipeDetailsFragment extends Fragment implements OnRecipeStepsRvIt
     public void onItemClicked(int position) {
         Intent intent = new Intent(getContext(), RecipeStepInfoActivity.class);
         intent.putExtra(RecipeStepInfoActivity.RECIPE_OBJ, recipe);
-        intent.putExtra(RecipeStepInfoActivity.RECIPE_STEP_OBJ, recipe.getSteps().get(position));
+        intent.putExtra(RecipeStepInfoActivity.STEP_POSITION, position);
         getContext().startActivity(intent);
     }
 

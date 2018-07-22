@@ -5,14 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.krp.bakingapp.R;
 import com.krp.bakingapp.model.Recipe;
-import com.krp.bakingapp.model.Step;
 import com.krp.bakingapp.utilities.FragmentUtils;
 import com.krp.bakingapp.views.fragments.RecipeStepInfoFragment;
 
 public class RecipeStepInfoActivity extends AppCompatActivity {
 
     public static final String RECIPE_OBJ = "recipeObj";
-    public static final String RECIPE_STEP_OBJ = "recipeStepObj";
+    public static final String STEP_POSITION = "stepPosition";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +20,9 @@ public class RecipeStepInfoActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             Recipe recipe = getIntent().getParcelableExtra(RECIPE_OBJ);
-            Step step = getIntent().getParcelableExtra(RECIPE_STEP_OBJ);
+            int stepPosition = getIntent().getIntExtra(STEP_POSITION,-1);
             FragmentUtils.addFragment(this, R.id.recipeStepInfoContainer,
-                    RecipeStepInfoFragment.newInstance(recipe, step), RecipeStepInfoFragment.TAG);
+                    RecipeStepInfoFragment.newInstance(recipe, stepPosition), RecipeStepInfoFragment.TAG);
         }
     }
 }

@@ -13,26 +13,25 @@ import android.view.ViewGroup;
 import com.krp.bakingapp.R;
 import com.krp.bakingapp.databinding.FragmentRecipeStepInfoBinding;
 import com.krp.bakingapp.model.Recipe;
-import com.krp.bakingapp.model.Step;
 import com.krp.bakingapp.viewModels.RecipeStepInfoViewModel;
 
 public class RecipeStepInfoFragment extends Fragment {
 
     public static final String TAG = RecipeStepInfoFragment.class.getSimpleName();
     private static final String RECIPE_OBJ = "recipeObj";
-    private static final String RECIPE_STEP_OBJ = "recipeStepObj";
+    private static final String STEP_POSITION = "stepPosition";
 
     FragmentRecipeStepInfoBinding binding;
     Recipe recipe;
-    Step currentStep;
+    int currentStepPosition;
 
     RecipeStepInfoViewModel viewModel;
 
-    public static RecipeStepInfoFragment newInstance(Recipe recipe, Step step) {
+    public static RecipeStepInfoFragment newInstance(Recipe recipe, int stepPosition) {
 
         Bundle args = new Bundle();
         args.putParcelable(RECIPE_OBJ, recipe);
-        args.putParcelable(RECIPE_STEP_OBJ, step);
+        args.putInt(STEP_POSITION, stepPosition);
         RecipeStepInfoFragment fragment = new RecipeStepInfoFragment();
         fragment.setArguments(args);
         return fragment;
@@ -57,9 +56,10 @@ public class RecipeStepInfoFragment extends Fragment {
 
         if (savedInstanceState == null) {
             recipe = getRecipe();
-            currentStep = getRecipeStep();
-
-            viewModel = new RecipeStepInfoViewModel(getContext(), recipe, currentStep);
+            currentStepPosition = getRecipeStep();
+            if (currentStepPosition != -1) {
+                viewModel = new RecipeStepInfoViewModel(getContext(), recipe, currentStepPosition);
+            }
         }
         binding.setViewModel(viewModel);
     }
@@ -78,7 +78,7 @@ public class RecipeStepInfoFragment extends Fragment {
     }
 
     // Method to get step object from arguments.
-    private Step getRecipeStep() {
-        return getArguments().getParcelable(RECIPE_STEP_OBJ);
+    private int getRecipeStep() {
+        return getArguments().getInt(STEP_POSITION, -1);
     }
 }
