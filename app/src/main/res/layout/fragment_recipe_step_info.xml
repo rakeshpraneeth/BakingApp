@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.krp.bakingapp.viewModels.RecipeStepInfoViewModel" />
+    </data>
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,7 +22,8 @@
             app:layout_constraintBottom_toTopOf="@+id/centerHorizontalGuideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:setPlayerView="@{viewModel.isExoPlayerInitialized}" />
 
         <android.support.constraint.Guideline
             android:id="@+id/centerHorizontalGuideline"
@@ -28,6 +36,7 @@
             android:id="@+id/instructions"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:text="@{viewModel.instructions}"
             app:layout_constraintBottom_toTopOf="@+id/bottomHorizontalGuideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +56,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/custom_button"
+            android:onClick="@{(v)->viewModel.onPreviousBtnClicked(v)}"
             android:text="@string/previous_step"
+            android:visibility="@{viewModel.previousBtnVisibility}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bottomHorizontalGuideline" />
@@ -58,7 +69,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/custom_button"
+            android:onClick="@{(v)->viewModel.onNextBtnClicked(v)}"
             android:text="@string/next_step"
+            android:visibility="@{viewModel.nextBtnVisibility}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bottomHorizontalGuideline" />
