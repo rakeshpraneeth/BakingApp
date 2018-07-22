@@ -33,13 +33,13 @@ public class RecipeDetailsFragment extends Fragment implements OnRecipeStepsRvIt
     public static final String RECIPE_ITEM = "recipeItem";
     private static final String INGREDIENT_TEXT = "ingredientText";
 
-    FragmentRecipeDetailsBinding binding;
-    Recipe recipe;
-    RecipeDetailViewModel viewModel;
-    RecipeStepsAdapter adapter;
-    String ingredientText;
+    private FragmentRecipeDetailsBinding binding;
+    private Recipe recipe;
+    private RecipeDetailViewModel viewModel;
+    private RecipeStepsAdapter adapter;
+    private String ingredientText;
 
-    OnRecipeStepSelectedCallback callback;
+    private OnRecipeStepSelectedCallback callback;
 
     private boolean isTabletMode;
 

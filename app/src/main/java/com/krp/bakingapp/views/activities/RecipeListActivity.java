@@ -11,7 +11,7 @@ import com.krp.bakingapp.views.fragments.RecipeListFragment;
 
 public class RecipeListActivity extends AppCompatActivity {
 
-    ActivityRecipeListBinding binding;
+    private ActivityRecipeListBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

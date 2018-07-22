@@ -19,9 +19,9 @@ public class RecipeListFragment extends Fragment {
 
     public static final String TAG = RecipeListFragment.class.getSimpleName();
 
-    FragmentRecipeListBinding binding;
-    RecipeAdapter adapter;
-    RecipeListViewModel viewModel;
+    private FragmentRecipeListBinding binding;
+    private RecipeAdapter adapter;
+    private RecipeListViewModel viewModel;
 
     public static RecipeListFragment newInstance() {
         Bundle args = new Bundle();

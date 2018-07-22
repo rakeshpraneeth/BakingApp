@@ -21,11 +21,11 @@ public class RecipeStepInfoFragment extends Fragment {
     private static final String RECIPE_OBJ = "recipeObj";
     private static final String STEP_POSITION = "stepPosition";
 
-    FragmentRecipeStepInfoBinding binding;
-    Recipe recipe;
-    int currentStepPosition;
+    private FragmentRecipeStepInfoBinding binding;
+    private Recipe recipe;
+    private int currentStepPosition;
 
-    RecipeStepInfoViewModel viewModel;
+    private RecipeStepInfoViewModel viewModel;
 
     public static RecipeStepInfoFragment newInstance(Recipe recipe, int stepPosition) {
 

@@ -15,7 +15,7 @@ import com.krp.bakingapp.views.fragments.RecipeStepInfoFragment;
 
 public class RecipeDetailsActivity extends AppCompatActivity implements OnRecipeStepSelectedCallback {
 
-    ActivityRecipeDetailsBinding binding;
+    private ActivityRecipeDetailsBinding binding;
     public static final String RECIPE_MODEL = "recipeModel";
 
     @Override

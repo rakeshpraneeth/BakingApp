@@ -33,8 +33,8 @@ import com.krp.bakingapp.model.Step;
  */
 public class RecipeStepInfoViewModel {
 
-    Recipe recipe;
-    int currentStepPosition;
+    private Recipe recipe;
+    private int currentStepPosition;
 
     private static ExoPlayer mExoPlayer;
     private Context context;

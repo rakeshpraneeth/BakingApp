@@ -9,7 +9,7 @@ import com.krp.bakingapp.R;
  */
 public class IngredientItemViewModel extends RowViewModel{
 
-    String ingredient;
+    private String ingredient;
 
     public IngredientItemViewModel(String ingredient) {
         this.ingredient = ingredient;

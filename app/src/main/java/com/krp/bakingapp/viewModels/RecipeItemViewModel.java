@@ -13,7 +13,7 @@ import com.krp.bakingapp.views.activities.RecipeDetailsActivity;
  */
 public class RecipeItemViewModel extends RowViewModel {
 
-    Recipe recipe;
+    private Recipe recipe;
 
     public RecipeItemViewModel(Recipe recipe) {
         this.recipe = recipe;
