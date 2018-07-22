@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">BakingApp</string>
+
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="unable_to_retrieve_data">Unable to retrieve data</string>
+    <string name="next_step">Next Step</string>
+    <string name="previous_step">Previous Step</string>
+    <string name="servings_format">%d servings</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="recipe">Recipe :</string>
+    <string name="na">N/A</string>
+    <string name="right_arrow_content_description">Right Arrow</string>
 </resources>
