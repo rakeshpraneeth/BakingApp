@@ -8,6 +8,7 @@ import android.databinding.ObservableInt;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
@@ -27,6 +28,7 @@ import com.google.android.exoplayer2.util.Util;
 import com.krp.bakingapp.R;
 import com.krp.bakingapp.model.Recipe;
 import com.krp.bakingapp.model.Step;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by Rakesh Praneeth.
@@ -44,7 +46,9 @@ public class RecipeStepInfoViewModel {
     private ObservableInt nextBtnVisibility;
     private ObservableBoolean isExoPlayerInitialized;
 
-    public RecipeStepInfoViewModel(Context context, Recipe recipe, int  currentStepPosition) {
+    private ObservableField<String> stepThumbnailUrl;
+
+    public RecipeStepInfoViewModel(Context context, Recipe recipe, int currentStepPosition) {
         this.context = context;
         this.recipe = recipe;
         this.currentStepPosition = currentStepPosition;
@@ -53,6 +57,7 @@ public class RecipeStepInfoViewModel {
         previousBtnVisibility = new ObservableInt(View.GONE);
         nextBtnVisibility = new ObservableInt(View.GONE);
         isExoPlayerInitialized = new ObservableBoolean(false);
+        stepThumbnailUrl = new ObservableField<>("");
         initializeData(recipe.getSteps().get(currentStepPosition));
     }
 
@@ -72,13 +77,16 @@ public class RecipeStepInfoViewModel {
         return isExoPlayerInitialized;
     }
 
+    public ObservableField<String> getStepThumbnailUrl() {
+        return stepThumbnailUrl;
+    }
+
     private void initializeData(Step step) {
         if (step != null) {
             if (!step.getVideoURL().isEmpty()) {
                 initializeExoPlayer(Uri.parse(step.getVideoURL()));
-            } else if (!step.getThumbnailURL().isEmpty()) {
-                initializeExoPlayer(Uri.parse(step.getThumbnailURL()));
             }
+            stepThumbnailUrl.set(step.getThumbnailURL());
             instructions.set(step.getDescription());
             previousStepBtnVisibility();
             nextStepBtnVisibility();
@@ -166,6 +174,22 @@ public class RecipeStepInfoViewModel {
             nextBtnVisibility.set(View.GONE);
         } else {
             nextBtnVisibility.set(View.VISIBLE);
+        }
+    }
+
+    @BindingAdapter("setStepThumbnail")
+    public static void setStepThumbnail(ImageView imageView, String path) {
+        if (imageView != null && path != null && !path.isEmpty()) {
+            // If the path is not empty.
+            Picasso.with(imageView.getContext())
+                    .load(path)
+                    .placeholder(R.drawable.recipe_vector)
+                    .error(R.drawable.recipe_vector)
+                    .into(imageView);
+
+        } else {
+            // If the path is empty.
+            imageView.setImageResource(R.drawable.recipe_vector);
         }
     }
 }
