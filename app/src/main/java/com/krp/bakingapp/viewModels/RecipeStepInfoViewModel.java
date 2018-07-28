@@ -48,7 +48,7 @@ public class RecipeStepInfoViewModel {
 
     private ObservableField<String> stepThumbnailUrl;
 
-    private Uri mCurrentVideoUri;
+    private String mCurrentVideoUrl;
 
     public RecipeStepInfoViewModel(Context context, Recipe recipe, int currentStepPosition) {
         this.context = context;
@@ -83,8 +83,8 @@ public class RecipeStepInfoViewModel {
         return stepThumbnailUrl;
     }
 
-    public Uri getCurrentVideoUri() {
-        return mCurrentVideoUri;
+    public String getCurrentVideoUrl() {
+        return mCurrentVideoUrl;
     }
 
     public static ExoPlayer getExoPlayer() {
@@ -93,9 +93,7 @@ public class RecipeStepInfoViewModel {
 
     private void initializeData(Step step) {
         if (step != null) {
-            if (!step.getVideoURL().isEmpty()) {
-                initializeExoPlayer(Uri.parse(step.getVideoURL()),0,true);
-            }
+            mCurrentVideoUrl = step.getVideoURL();
             stepThumbnailUrl.set(step.getThumbnailURL());
             instructions.set(step.getDescription());
             previousStepBtnVisibility();
@@ -103,8 +101,7 @@ public class RecipeStepInfoViewModel {
         }
     }
 
-    public void initializeExoPlayer(Uri videoUri, long videoPosition, boolean playWhenReady) {
-        mCurrentVideoUri = videoUri;
+    public void initializeExoPlayer(String videoUrl, long videoPosition, boolean playWhenReady) {
         if (mExoPlayer == null) {
 
             RenderersFactory renderersFactory = new DefaultRenderersFactory(context);
@@ -113,11 +110,13 @@ public class RecipeStepInfoViewModel {
             mExoPlayer = ExoPlayerFactory.newSimpleInstance(renderersFactory, trackSelector, loadControl);
         }
 
-        MediaSource mediaSource = buildMediaSource(videoUri);
-        mExoPlayer.prepare(mediaSource,true,false);
+        Uri uri = Uri.parse(videoUrl);
+        MediaSource mediaSource = buildMediaSource(uri);
+        mExoPlayer.prepare(mediaSource, true, false);
         mExoPlayer.seekTo(videoPosition);
         mExoPlayer.setPlayWhenReady(playWhenReady);
         isExoPlayerInitialized.set(true);
+        isExoPlayerInitialized.notifyChange();
     }
 
     private MediaSource buildMediaSource(Uri videoUri) {
@@ -158,14 +157,22 @@ public class RecipeStepInfoViewModel {
     public void onPreviousBtnClicked(View view) {
         currentStepPosition = currentStepPosition - 1;
         if (recipe.getSteps().get(currentStepPosition) != null) {
-            initializeData(recipe.getSteps().get(currentStepPosition));
+            Step previousStep = recipe.getSteps().get(currentStepPosition);
+            initializeData(previousStep);
+            if (!previousStep.getVideoURL().isEmpty()) {
+                initializeExoPlayer(previousStep.getVideoURL(), 0, true);
+            }
         }
     }
 
     public void onNextBtnClicked(View view) {
         currentStepPosition = currentStepPosition + 1;
         if (recipe.getSteps().get(currentStepPosition) != null) {
-            initializeData(recipe.getSteps().get(currentStepPosition));
+            Step nextStep = recipe.getSteps().get(currentStepPosition);
+            initializeData(nextStep);
+            if (!nextStep.getVideoURL().isEmpty()) {
+                initializeExoPlayer(nextStep.getVideoURL(), 0, true);
+            }
         }
     }
 

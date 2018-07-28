@@ -76,7 +76,10 @@ public class RecipeStepInfoFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (viewModel != null) {
-            viewModel.initializeExoPlayer(viewModel.getCurrentVideoUri(), currentVideoPosition, playWhenReady);
+            String url = viewModel.getCurrentVideoUrl();
+            if(!url.isEmpty()) {
+                viewModel.initializeExoPlayer(viewModel.getCurrentVideoUrl(), currentVideoPosition, playWhenReady);
+            }
         }
     }
 
