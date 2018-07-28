@@ -15,6 +15,9 @@ dependencies {
     //Exo Player
     implementation "com.google.android.exoplayer:exoplayer:$exoPlayerVersion"
 
+    //Picasso
+    implementation "com.squareup.picasso:picasso:$picassoVersion"
+
     // Testing
     implementation "com.android.support.test.espresso:espresso-idling-resource:$idlingResource"
 

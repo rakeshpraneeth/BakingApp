@@ -28,6 +28,14 @@
             android:paddingRight="@dimen/recipe_item_side_padding"
             android:paddingTop="@dimen/recipe_item_top_bottom_padding">
 
+            <ImageView
+                android:id="@+id/recipeImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:setRecipeImage="@{item.recipe.image}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/recipeName"
                 android:layout_width="wrap_content"
@@ -35,8 +43,10 @@
                 android:text="@{item.recipe.name}"
                 app:layout_constraintEnd_toStartOf="@+id/servingsTV"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/recipeImage"
+                app:layout_constraintTop_toTopOf="@+id/recipeImage"
+                app:layout_constraintBottom_toBottomOf="@+id/recipeImage"
+                android:layout_marginLeft="@dimen/recipe_item_side_padding"
                 tools:text="Recipe Name" />
 
             <android.support.v7.widget.AppCompatTextView
@@ -46,7 +56,8 @@
                 android:text="@{String.format(@string/servings_format,item.recipe.servings)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/recipeName"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/recipeName"
+                app:layout_constraintBottom_toBottomOf="@+id/recipeName"
                 tools:text="8 servings" />
 
 

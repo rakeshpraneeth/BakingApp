@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.exoplayer2.ExoPlayer;
 import com.krp.bakingapp.R;
 import com.krp.bakingapp.databinding.FragmentRecipeStepInfoBinding;
 import com.krp.bakingapp.model.Recipe;
@@ -21,9 +22,15 @@ public class RecipeStepInfoFragment extends Fragment {
     private static final String RECIPE_OBJ = "recipeObj";
     private static final String STEP_POSITION = "stepPosition";
 
+    private static final String EXOPLAYER_VIDEO_POSITION = "exoPlayerVideoPosition";
+    private static final String EXOPLAYER_PLAY_WHEN_READY = "exoPlayerPlayWhenReady";
+
     private FragmentRecipeStepInfoBinding binding;
 
     private RecipeStepInfoViewModel viewModel;
+
+    private boolean playWhenReady = true;
+    private long currentVideoPosition = 0;
 
     public static RecipeStepInfoFragment newInstance(Recipe recipe, int stepPosition) {
 
@@ -58,8 +65,35 @@ public class RecipeStepInfoFragment extends Fragment {
             if (currentStepPosition != -1) {
                 viewModel = new RecipeStepInfoViewModel(getContext(), recipe, currentStepPosition);
             }
+        } else {
+            playWhenReady = savedInstanceState.getBoolean(EXOPLAYER_PLAY_WHEN_READY);
+            currentVideoPosition = savedInstanceState.getLong(EXOPLAYER_VIDEO_POSITION);
         }
         binding.setViewModel(viewModel);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (viewModel != null) {
+            String url = viewModel.getCurrentVideoUrl();
+            if(!url.isEmpty()) {
+                viewModel.initializeExoPlayer(viewModel.getCurrentVideoUrl(), currentVideoPosition, playWhenReady);
+            }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (viewModel != null) {
+            ExoPlayer exoPlayer = RecipeStepInfoViewModel.getExoPlayer();
+            currentVideoPosition = exoPlayer.getCurrentPosition();
+            playWhenReady = exoPlayer.getPlayWhenReady();
+            outState.putLong(EXOPLAYER_VIDEO_POSITION, currentVideoPosition);
+            outState.putBoolean(EXOPLAYER_PLAY_WHEN_READY, playWhenReady);
+        }
     }
 
     @Override
