@@ -48,6 +48,8 @@ public class RecipeStepInfoViewModel {
 
     private ObservableField<String> stepThumbnailUrl;
 
+    private Uri mCurrentVideoUri;
+
     public RecipeStepInfoViewModel(Context context, Recipe recipe, int currentStepPosition) {
         this.context = context;
         this.recipe = recipe;
@@ -81,10 +83,18 @@ public class RecipeStepInfoViewModel {
         return stepThumbnailUrl;
     }
 
+    public Uri getCurrentVideoUri() {
+        return mCurrentVideoUri;
+    }
+
+    public static ExoPlayer getExoPlayer() {
+        return mExoPlayer;
+    }
+
     private void initializeData(Step step) {
         if (step != null) {
             if (!step.getVideoURL().isEmpty()) {
-                initializeExoPlayer(Uri.parse(step.getVideoURL()));
+                initializeExoPlayer(Uri.parse(step.getVideoURL()),0,true);
             }
             stepThumbnailUrl.set(step.getThumbnailURL());
             instructions.set(step.getDescription());
@@ -93,18 +103,21 @@ public class RecipeStepInfoViewModel {
         }
     }
 
-    private void initializeExoPlayer(Uri videoUri) {
+    public void initializeExoPlayer(Uri videoUri, long videoPosition, boolean playWhenReady) {
+        mCurrentVideoUri = videoUri;
         if (mExoPlayer == null) {
 
             RenderersFactory renderersFactory = new DefaultRenderersFactory(context);
             TrackSelector trackSelector = new DefaultTrackSelector();
             LoadControl loadControl = new DefaultLoadControl();
             mExoPlayer = ExoPlayerFactory.newSimpleInstance(renderersFactory, trackSelector, loadControl);
-            isExoPlayerInitialized.set(true);
         }
+
         MediaSource mediaSource = buildMediaSource(videoUri);
-        mExoPlayer.prepare(mediaSource);
-        mExoPlayer.setPlayWhenReady(true);
+        mExoPlayer.prepare(mediaSource,true,false);
+        mExoPlayer.seekTo(videoPosition);
+        mExoPlayer.setPlayWhenReady(playWhenReady);
+        isExoPlayerInitialized.set(true);
     }
 
     private MediaSource buildMediaSource(Uri videoUri) {
